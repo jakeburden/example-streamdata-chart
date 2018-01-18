@@ -1,0 +1,20 @@
+{
+  "name": "example-streamdata-chart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bytes-counter": "^1.0.0",
+    "chart.js": "^2.7.1",
+    "streamdata.io-events": "^1.2.2"
+  },
+  "devDependencies": {
+    "budo": "^10.0.4"
+  }
+}
