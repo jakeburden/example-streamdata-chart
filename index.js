@@ -12,10 +12,8 @@ gradientStroke.addColorStop(1, 'rgba(253,0,17,1)')
 var chart = new Chart(ctx, {
   // The type of chart we want to create
   type: "line",
-
   // The data for our dataset
   data: {
-    labels: ["With Streamdata.io", "without Streamdata.io"],
     datasets: [
       {
         label: "With Streamdata.io",
@@ -26,9 +24,8 @@ var chart = new Chart(ctx, {
       {
         label: "without Streamdata.io",
         fillColor: "rgba(0,0,0,0)",
-        strokeColor: "rgba(220,220,220,1)",
-        pointColor: "rgba(200,122,20,1)",
-
+        strokeColor: "#526773",
+        borderColor: "#526773",
         data: [0]
       },
     ]
@@ -36,19 +33,38 @@ var chart = new Chart(ctx, {
 
   // Configuration options go here
   options: {
+    responsive: true,
     scales: {
       yAxes: [{
         scaleLabel: {
           display: true,
-          labelString: 'Data Consumption'
+          labelString: 'Data Consumption',
+          fontColor: '#fff;'
+        },
+        gridLines: {
+           color: "#fff",
         }
       }],
       xAxes: [{
         scaleLabel: {
           display: true,
-          labelString: 'Time Consumption'
+          labelString: 'Time Consumption',
+          fontColor: '#fff;'
+        },
+        gridLines: {
+           color: "#fff",
         }
       }]
+    },
+    legend: {
+      display: true,
+      position: 'bottom',
+      labels: {
+        fontColor: '#fff',
+        defaultFontColor: '#fff',
+        usePointStyle: true,
+        pointStyle: 'circle'
+      }
     }
   }
 })
@@ -64,8 +80,10 @@ SSE
     var bytesAdded = chart.data.datasets[0].data.reduce(function (acc, total) {
       return acc + total
     }, 0)
-    chart.data.datasets[0].data[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
+    var dataset = chart.data.datasets[0].data
+    dataset[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
     chart.update()
+    console.log('rightio')
     first = false
   })
   .on('patch', function (patch) {
@@ -73,7 +91,8 @@ SSE
     var bytesAdded = chart.data.datasets[0].data.reduce(function (acc, total) {
       return acc + total
     }, 0)
-    chart.data.datasets[0].data[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
+    var dataset = chart.data.datasets[0].data
+    dataset[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
     chart.update()
   })
 
@@ -85,7 +104,8 @@ setInterval(function () {
     var bytesAdded = chart.data.datasets[1].data.reduce(function (acc, total) {
       return acc + total
     }, 0)
-    chart.data.datasets[1].data[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
+    var dataset = chart.data.datasets[1].data
+    dataset[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
     chart.update()
     console.log(chart.data.datasets[1])
   })
