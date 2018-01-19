@@ -19,14 +19,14 @@ var chart = new Chart(ctx, {
         label: "With Streamdata.io",
         backgroundColor: "transparent",
         borderColor: gradientStroke,
-        data: [0]
+        data: [1, 2]
       },
       {
         label: "without Streamdata.io",
         fillColor: "rgba(0,0,0,0)",
         strokeColor: "#526773",
         borderColor: "#526773",
-        data: [0]
+        data: [1, 2]
       },
     ]
   },
@@ -34,6 +34,10 @@ var chart = new Chart(ctx, {
   // Configuration options go here
   options: {
     responsive: true,
+    maintainAspectRatio: true,
+    layout: {
+      
+    },
     scales: {
       yAxes: [{
         scaleLabel: {
@@ -43,6 +47,9 @@ var chart = new Chart(ctx, {
         },
         gridLines: {
            color: "#fff",
+        },
+        ticks: {
+          color: "#fff"
         }
       }],
       xAxes: [{
@@ -53,6 +60,9 @@ var chart = new Chart(ctx, {
         },
         gridLines: {
            color: "#fff",
+        },
+        ticks: {
+          color: "#fff"
         }
       }]
     },
@@ -73,6 +83,7 @@ var first = true
 var URL = 'http://stockmarket.streamdata.io/v2/prices'
 var APPKEY = 'ODRlZDNmYmUtMDAxZC00NWJmLTgwMzQtNTkzMWJiYjFhYjVj'
 var SSE = streamdata(URL, APPKEY)
+
 SSE
   .on('data', function (data) {
     if (!first) return
@@ -81,19 +92,20 @@ SSE
       return acc + total
     }, 0)
     var dataset = chart.data.datasets[0].data
-    dataset[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
+    dataset.push(bytesAdded + (bytes / 1000))
     chart.update()
-    console.log('rightio')
     first = false
   })
   .on('patch', function (patch) {
+    chart.update()
     var bytes = bytesCounter.count(JSON.stringify(patch))
     var bytesAdded = chart.data.datasets[0].data.reduce(function (acc, total) {
       return acc + total
     }, 0)
     var dataset = chart.data.datasets[0].data
-    dataset[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
-    chart.update()
+    dataset[1] = (bytesAdded + (bytes / 1000))
+    
+    console.log('patch', dataset)
   })
 
 setInterval(function () {
@@ -105,9 +117,10 @@ setInterval(function () {
       return acc + total
     }, 0)
     var dataset = chart.data.datasets[1].data
-    dataset[1] = bytesAdded + (bytes / 1000) // .push(bytesAdded + (bytes / 1000)) //.data[1] = i *= 1.3
+    dataset[1] = (bytesAdded + (bytes / 1000))
+    
     chart.update()
-    console.log(chart.data.datasets[1])
+    // console.log('fetch', dataset)
   })
 }, 1000)
 
