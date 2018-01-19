@@ -37,27 +37,37 @@ var chart = new Chart(ctx, {
     maintainAspectRatio: true,
     scaleFontColor: "#fff",
     layout: {
-      
+       padding: {
+          left: 15,
+          right: 15,
+          top: 15,
+          bottom: 15
+      }
     },
     scales: {
       yAxes: [{
         scaleLabel: {
           display: true,
           labelString: 'Data Consumption',
-          fontColor: '#fff;'
+          fontColor: '#fff',
+          fontSize: 16,
         },
         gridLines: {
-           color: "#fff",
+           color: "rgba(255, 255, 255, 0.3)",
         },
         ticks: {
-          fontColor: "#fff"
+          fontColor: "#fff",
+          callback: function(value, index, values) {
+            return parseFloat(value, 10) + 'kb'
+          }
         }
       }],
       xAxes: [{
         scaleLabel: {
           display: true,
           labelString: 'Time Consumption',
-          fontColor: '#fff;'
+          fontColor: '#fff',
+          fontSize: 16
         },
         gridLines: {
            color: "#fff",
