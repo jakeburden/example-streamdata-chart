@@ -19,14 +19,14 @@ var chart = new Chart(ctx, {
         label: "With Streamdata.io",
         backgroundColor: "transparent",
         borderColor: gradientStroke,
-        data: [1, 2]
+        data: [0, 1]
       },
       {
         label: "without Streamdata.io",
         fillColor: "rgba(0,0,0,0)",
         strokeColor: "#526773",
         borderColor: "#526773",
-        data: [1, 2]
+        data: [0, 1]
       },
     ]
   },
@@ -35,6 +35,7 @@ var chart = new Chart(ctx, {
   options: {
     responsive: true,
     maintainAspectRatio: true,
+    scaleFontColor: "#fff",
     layout: {
       
     },
@@ -49,7 +50,7 @@ var chart = new Chart(ctx, {
            color: "#fff",
         },
         ticks: {
-          color: "#fff"
+          fontColor: "#fff"
         }
       }],
       xAxes: [{
@@ -62,7 +63,7 @@ var chart = new Chart(ctx, {
            color: "#fff",
         },
         ticks: {
-          color: "#fff"
+          fontColor: "#fff"
         }
       }]
     },
