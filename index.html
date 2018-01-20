@@ -8,6 +8,7 @@
         width: 100%;
         height: 100%;
         margin: 0 auto;
+        font-family: sans-serif;
       }
 
       canvas {
@@ -15,10 +16,54 @@
         height: 100%;
         width: 100%;
       }
+
+      .chart__legend {
+        background: #021C2C;
+        padding: 1em;
+        padding-top: 0;
+      }
+
+      .chart__legendKey {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: #fff;
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10px;
+      }
+
+      .chart__legendIcon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .chart__legendCopy {
+        margin: 0;
+      }
+
+      .chart__url {
+        background: #03263B;
+        box-shadow: 5px -5px 10px 0 rgba(0,0,0,0.15);
+        max-width: 390px;
+        width: 100%;
+        height: 50px;
+        padding: 5px;
+        text-align: center;
+      }
+
+      .chart__url {
+        color: #CED7DC;
+        font-size: 16px;
+      }
     </style>
   </head>
 </html>
 <body>
   <canvas id='chart'></canvas>
+  <div class="chart__legendContainer"></div>
+  <div class="chart__url">
+    <p class="chart__urlCopy">http://stockmarket.streamdata.io/prices</p>
+  </div>
   <script src='index.js'></script>
 </body>

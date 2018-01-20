@@ -78,7 +78,7 @@ var chart = new Chart(ctx, {
       }]
     },
     legend: {
-      display: true,
+      display: false,
       position: 'bottom',
       labels: {
         fontColor: '#fff',
@@ -86,9 +86,28 @@ var chart = new Chart(ctx, {
         usePointStyle: true,
         pointStyle: 'circle'
       }
+    },
+    legendCallback: function (chart) {
+      return `<div class="chart__legend">
+                <div class="chart__legendKey">
+                  <svg class="chart__legendIcon">
+                     <circle cx='10' cy='10' r='5' fill='#FD0010'></circle>
+                  </svg>
+                  <p class="chart__legendCopy">With Streamdata.io</p>
+                </div>
+                <div class="chart__legendKey">
+                  <svg class="chart__legendIcon">
+                     <circle cx='10' cy='10' r='5' fill='#526773'></circle>
+                  </svg>
+                  <p class="chart__legendCopy">Without Streamdata.io</p>
+                </div>
+              </div>`
     }
   }
 })
+
+var legend = chart.generateLegend()
+document.querySelector('.chart__legendContainer').innerHTML = legend
 
 var first = true
 var URL = 'http://stockmarket.streamdata.io/v2/prices'
@@ -103,7 +122,7 @@ SSE
       return acc + total
     }, 0)
     var dataset = chart.data.datasets[0].data
-    dataset.push(bytesAdded + (bytes / 1000))
+    dataset.push(parseInt(bytesAdded + (bytes / 1000), 10))
     chart.update()
     first = false
   })
@@ -114,9 +133,8 @@ SSE
       return acc + total
     }, 0)
     var dataset = chart.data.datasets[0].data
-    dataset[1] = (bytesAdded + (bytes / 1000))
+    dataset[1] = (parseInt(bytesAdded + (bytes / 1000), 10))
     
-    console.log('patch', dataset)
   })
 
 setInterval(function () {
@@ -128,7 +146,7 @@ setInterval(function () {
       return acc + total
     }, 0)
     var dataset = chart.data.datasets[1].data
-    dataset[1] = (bytesAdded + (bytes / 1000))
+    dataset[1] = (parseInt(bytesAdded + (bytes / 1000), 10))
     
     chart.update()
     // console.log('fetch', dataset)
